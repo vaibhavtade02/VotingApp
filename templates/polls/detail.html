@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		h1 {
+			font-family: 'Raleway', sans-serif;
+			font-weight: 400;
+		}
+
+		a,
+		p {
+			color: #4b5156;
+			text-decoration: none;
+		}
+
+		.block-container {
+			max-width: 550px;
+			margin: 100px auto;
+			/* Adjust margin to center the container vertically */
+			background-color: #fff;
+			box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+		}
+
+		.header-bar {
+			display: flex;
+			/* justify-content: space-between; */
+			color: #fff;
+			padding: 10px;
+			border-radius: 5px 5px 0 0;
+			background: linear-gradient(90deg, #f4956c 0%, #d3783b 43%, #ff7b00ea 100%);
+			flex-direction: column;
+		}
+
+		.back-btn {
+			padding: 6px;
+			border-radius: 5px;
+			border: 2px solid grey;
+			color: black;
+		}
+
+		.back-btn:hover {
+			color: white;
+			background-color: #ff7b00ea;
+			border: 2px solid white;
+		}
+
+		.header-bar a {
+			color: white;
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		.question {
+			font-size: 25px;
+		}
+
+		.card-btn {
+			background-color: #ff7b00ea;
+			border: 2px solid #ff7b00ea;
+			border-radius: 5px;
+			padding: 6px;
+			color: white;
+		}
+
+		.card-btn:hover {
+			background-color: white;
+			border: 2px solid #ff7b00ea;
+			color: #ff7b00ea;
+			cursor: pointer;
+		}
+
+
+
+		.input {
+			margin-top: 20px;
+		}
+
+
+		.submit-btn {
+			margin: 15px;
+			color: white;
+			background-color: #ff7b00ea;
+			border: 2px solid #ff7b00ea;
+			font-size: 17px;
+			border-radius: 5px;
+			padding: 4px;
+		}
+
+		.submit-btn:hover {
+			color: #ff7b00ea;
+			background-color: white;
+			transform: .1s ease-in-out;
+		}
+	</style>
+</head>
+
+
+<body>
+
+	{% block content %}
+	<div class="block-container">
+		<div class="header-bar">
+			<a href="{% url 'polls:index' %}"><button class="back-btn">Back to voting lists </button></a>
+			<h1>{{ question.question_text }}</h1>
+		</div>
+
+		{% if error_message %}
+		<p>
+			<strong>{{ error_message }}</strong>
+		</p>
+
+		{% endif %}
+
+		<form action="{% url 'polls:vote' question.id %}" method="post">
+			{% csrf_token %}
+			{% for choice in question.choice_set.all %}
+			<div>
+				<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
+					class="input" />
+				<label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+			</div>
+			{% endfor %}
+			<input type="submit" value="Vote" class="submit-btn" />
+		</form>
+	</div>
+	{% endblock %}
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		h1 {
+			font-family: 'Raleway', sans-serif;
+			font-weight: 400;
+		}
+
+		a,
+		p {
+			color: #4b5156;
+			text-decoration: none;
+		}
+
+		.block-container {
+			max-width: 550px;
+			margin: 100px auto;
+			/* Adjust margin to center the container vertically */
+			background-color: #fff;
+			box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+		}
+
+		.header-bar {
+			display: flex;
+			/* justify-content: space-between; */
+			color: #fff;
+			padding: 10px;
+			border-radius: 5px 5px 0 0;
+			background: linear-gradient(90deg, #f4956c 0%, #d3783b 43%, #ff7b00ea 100%);
+			flex-direction: column;
+		}
+
+		.header-bar a {
+			color: white;
+		}
+
+		.back-btn {
+			padding: 6px;
+			border-radius: 5px;
+			border: 2px solid grey;
+			color: black;
+		}
+
+		.back-btn:hover {
+			color: white;
+			background-color: #ff7b00ea;
+			border: 2px solid white;
+		}
+
+		.list-grp {
+			margin-left: 15px;
+
+		}
+
+		.list-grp-item {
+			display: flex;
+			padding: 10px 15px;
+			flex-direction: column;
+
+
+		}
+
+		li {
+			margin-top: 15px;
+			display: flex;
+			justify-content: space-between;
+			padding: 0 10px;
+		}
+
+		.badge {
+			font-size: 16px;
+			padding: 5px;
+			background-color: #f4956c;
+			border: 1px solid black;
+			border-radius: 4px;
+		}
+
+
+		.btn {
+			background-color: #ff7b00ea;
+			border: 2px solid #ff7b00ea;
+			border-radius: 5px;
+			padding: 6px;
+			color: white;
+			margin: 10px;
+		}
+
+		.btn:hover {
+			background-color: white;
+			border: 2px solid #ff7b00ea;
+			color: #ff7b00ea;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	{% block content %}
+
+	<div class="block-container">
+		<h1 class="header-bar">{{ question.question_text }}</h1>
+		<div class="list-grp">
+			<ul class="list-grp-item">
+				{% for choice in question.choice_set.all %}
+				<li>
+					{{ choice.choice_text }} <span class="badge">{{ choice.votes }}
+						vote{{ choice.votes | pluralize }}</span>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+
+		<a href="{% url 'polls:index' %}"><button class="btn">Back To Polls</button></a>
+		<a href="{% url 'polls:detail' question.id %}"><button class="btn">Vote again?</button></a>
+		{% endblock %}
+	</div>
+
+</body>
+
+</html>

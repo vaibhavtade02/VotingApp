@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		h1 {
+			font-family: 'Raleway', sans-serif;
+			font-weight: 400;
+		}
+
+		a,
+		p {
+			color: #4b5156;
+			text-decoration: none;
+		}
+
+		.block-container {
+			max-width: 550px;
+			margin: 100px auto;
+			/* Adjust margin to center the container vertically */
+			background-color: #fff;
+			box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+		}
+
+		.header-bar {
+			display: flex;
+
+			color: #fff;
+			padding: 10px;
+			border-radius: 5px 5px 0 0;
+			background: linear-gradient(90deg, #f4956c 0%, #d3783b 43%, #ff7b00ea 100%);
+			flex-direction: column;
+		}
+
+		.header-bar a {
+			color: white;
+		}
+
+		.back-btn {
+			padding: 6px;
+			border-radius: 5px;
+			border: 2px solid grey;
+			color: black;
+		}
+
+		.back-btn:hover {
+			color: white;
+			background-color: #ff7b00ea;
+			border: 2px solid white;
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		.inner-card {
+			background-color: #f5b396;
+			padding: 10px;
+			border-radius: 10px;
+			border: 2px solid #4b5156;
+		}
+
+		.question {
+			font-size: 25px;
+		}
+
+		.card-btn {
+			background-color: #ff7b00ea;
+			border: 2px solid #ff7b00ea;
+			border-radius: 5px;
+			padding: 6px;
+			color: white;
+		}
+
+		.card-btn:hover {
+			background-color: white;
+			border: 2px solid #ff7b00ea;
+			color: #ff7b00ea;
+			cursor: pointer;
+		}
+
+		.back-btn {
+			padding: 6px;
+			border-radius: 5px;
+			border: 2px solid grey;
+			color: black;
+		}
+
+		.back-btn:hover {
+			color: white;
+			background-color: #ff7b00ea;
+			border: 2px solid white;
+		}	
+	</style>
+</head>
+
+
+<body>
+
+	{% block content %}
+	<div class="block-container">
+
+		<div class="header-bar">
+			<a href="{% url 'index' %}"><button class="back-btn">Back to home</button></a>
+			<h1>Voting List</h1>
+		</div>
+		{% if latest_question_list %}
+		{% for question in latest_question_list %}
+		<div class="card-body">
+			<div class="inner-card">
+				<p class="question">{{ question.question_text }}</p>
+				<a href="{% url 'polls:detail' question.id %}"><button class="card-btn">Vote Now!</button></a>
+				<a href="{% url 'polls:results' question.id %}"><button class="card-btn">Results!</button></a>
+			</div>
+		</div>
+		{% endfor %}
+		{% else %}
+		<p>No Voting is available now</p>
+	</div>
+	{% endif %}
+	{% endblock %}
+
+
+
+
+</body>
+
+</html>
